@@ -51,6 +51,7 @@ Widget build(BuildContext context) {
   return Scaffold(
     appBar: AppBar(
       title: Text('User Details: ${widget.username}'),
+      
     ),
     body: userDetails.isNotEmpty
         ? SingleChildScrollView(

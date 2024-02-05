@@ -59,45 +59,68 @@ Widget build(BuildContext context) {
     appBar: AppBar(
       title: Text('${widget.username}\'s Followers'),
     ),
-    body: Column(
-      children: [
-        Expanded(
-          child: ListView.builder(
-            itemCount: followers.length,
-            itemBuilder: (context, index) => Card(
-              elevation: 3, // Add elevation for a card-like appearance
-              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16), // Add margin for spacing
-              child: ListTile(
-                contentPadding: EdgeInsets.all(16), // Add padding for content
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(followers[index].avatarUrl),
-                ),
-                title: Text(
-                  followers[index].login,
-                  style: TextStyle(
-                    fontSize: 18, // Adjust font size
-                    fontWeight: FontWeight.bold, // Make the text bold
-                  ),
+    body: followers.isEmpty
+        ? Center(
+            child: CircularProgressIndicator(), // Show loader while fetching followers
+          )
+        : Column(
+            children: [
+              Expanded(
+                child: ListView.builder(
+                  itemCount: followers.length,
+                  itemBuilder: (context, index) {
+                    final follower = followers[index];
+                    return Card(
+                      elevation: 2.0,
+                      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          radius: 30.0,
+                          backgroundImage: NetworkImage(follower.avatarUrl),
+                        ),
+                        title: Text(
+                          follower.login,
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        // subtitle: Text(
+                        //   follower.type,
+                        //   style: TextStyle(
+                        //     fontSize: 16.0,
+                        //   ),
+                        // ),
+                        // trailing: Icon(
+                        //   Icons.arrow_forward,
+                        //   size: 32.0,
+                        // ),
+                        // onTap: () {
+                        //   // Handle follower item tap
+                        // },
+                      ),
+                    );
+                  },
                 ),
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: prevPage,
+                      child: Text('Previous'),
+                    ),
+                    ElevatedButton(
+                      onPressed: nextPage,
+                      child: Text('Next'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            ElevatedButton(
-              onPressed: prevPage,
-              child: Text('Previous'),
-            ),
-            ElevatedButton(
-              onPressed: nextPage,
-              child: Text('Next'),
-            ),
-          ],
-        ),
-      ],
-    ),
   );
 }
 

@@ -53,40 +53,65 @@ class _FollowingPageState extends State<FollowingPage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('${widget.username}\'s Following'),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: following.length,
-              itemBuilder: (context, index) => ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(following[index]['avatar_url']),
-                ),
-                title: Text(following[index]['login']),
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+ @override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text('${widget.username}\'s Following'),
+    ),
+    body: following.isEmpty
+        ? Center(
+            child: CircularProgressIndicator(), // Show loader while fetching following
+          )
+        : Column(
             children: [
-              ElevatedButton(
-                onPressed: prevPage,
-                child: Text('Previous'),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: following.length,
+                  itemBuilder: (context, index) {
+                    final followingUser = following[index];
+                    return Card(
+                      elevation: 2.0,
+                      margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          radius: 30.0,
+                          backgroundImage: NetworkImage(followingUser['avatar_url']),
+                        ),
+                        title: Text(
+                          followingUser['login'],
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onTap: () {
+                          // Handle following item tap
+                        },
+                      ),
+                    );
+                  },
+                ),
               ),
-              ElevatedButton(
-                onPressed: nextPage,
-                child: Text('Next'),
+              Padding(
+                 padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton(
+                      onPressed: prevPage,
+                      child: Text('Previous'),
+                    ),
+                    ElevatedButton(
+                      onPressed: nextPage,
+                      child: Text('Next'),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
-        ],
-      ),
-    );
-  }
+  );
+}
+
 }

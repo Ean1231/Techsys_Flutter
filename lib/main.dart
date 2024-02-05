@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'GitHub Users and Repos',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -102,6 +103,8 @@ class _UserListPageState extends State<UserListPage> {
   String searchQuery = 'a';
   final int perPage = 10;
   final String githubApiToken = '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';
+  String errorMessage = '';
+  
   @override
   void initState() {
     super.initState();
@@ -122,9 +125,13 @@ class _UserListPageState extends State<UserListPage> {
       final items = jsonData['items'];
       setState(() {
         users = items.map<User>((userJson) => User.fromJson(userJson)).toList();
+        errorMessage = '';
       });
     } else {
-      throw Exception('Failed to load users');
+      setState(() {
+        users = []; // Clear the user list
+        errorMessage = 'No users found'; // Set the error message
+      });
     }
   }
 
@@ -166,6 +173,7 @@ Widget build(BuildContext context) {
             onChanged: handleSearch,
             decoration: InputDecoration(
               labelText: 'Search Users',
+              errorText: errorMessage.isNotEmpty ? errorMessage : null,
               // suffixIcon: IconButton(
               //   // icon: Icon(Icons.clear),
               //   onPressed: () {
@@ -177,6 +185,7 @@ Widget build(BuildContext context) {
               // ),
             ),
           ),
+
         ),
       
         Expanded(

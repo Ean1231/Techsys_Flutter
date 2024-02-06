@@ -103,16 +103,16 @@ class _UserListPageState extends State<UserListPage> {
   }
 
   Future<void> fetchData() async {
-    final String githubApiToken = dotenv.env['GITHUB_TOKEN']!;
+    // final String githubApiToken = dotenv.env['GITHUB_TOKEN']!;
 
-     final headers = {
-      'Authorization': 'token $githubApiToken',
-    };
+    //  final headers = {
+    //   'Authorization': 'token $githubApiToken',
+    // };
 
     final response = await http.get(
       Uri.parse(
           'https://api.github.com/search/users?q=$searchQuery&page=$currentPage&per_page=$perPage'),
-          headers: headers,
+          // headers: headers,
     );
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);

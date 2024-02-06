@@ -102,7 +102,7 @@ class _UserListPageState extends State<UserListPage> {
   int currentPage = 1;
   String searchQuery = 'a';
   final int perPage = 10;
-  final String githubApiToken = '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';
+  final String githubApiToken = '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';
   String errorMessage = '';
   
   @override

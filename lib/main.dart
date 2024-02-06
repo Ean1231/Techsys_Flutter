@@ -7,9 +7,12 @@ import 'dart:convert';
 import 'package:techsys_flutter/user-details.dart';
 import 'package:techsys_flutter/gists.dart';
 import 'followers.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 
-void main() {
+
+Future main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -90,7 +93,7 @@ class _UserListPageState extends State<UserListPage> {
   int currentPage = 1;
   String searchQuery = 'a';
   final int perPage = 10;
-  final String githubApiToken = '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';
+  // final String githubApiToken = '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';
   String errorMessage = '';
   
   @override
@@ -100,9 +103,12 @@ class _UserListPageState extends State<UserListPage> {
   }
 
   Future<void> fetchData() async {
+    final String githubApiToken = dotenv.env['GITHUB_TOKEN']!;
+
      final headers = {
       'Authorization': 'token $githubApiToken',
     };
+
     final response = await http.get(
       Uri.parse(
           'https://api.github.com/search/users?q=$searchQuery&page=$currentPage&per_page=$perPage'),

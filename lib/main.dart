@@ -7,14 +7,16 @@ import 'dart:convert';
 import 'package:techsys_flutter/user-details.dart';
 import 'package:techsys_flutter/gists.dart';
 import 'followers.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+// import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-
-
-Future main() async {
-  await dotenv.load(fileName: ".env");
+void main() {
   runApp(const MyApp());
 }
+
+// Future main() async {
+//   await dotenv.load(fileName: ".env");
+//   runApp(const MyApp());
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

@@ -33,14 +33,14 @@ class _FollowingPageState extends State<FollowingPage> {
       });
     } else {
      showDialog(
-      context: context, // Context is used here directly
+      context: context, 
       builder: (context) => AlertDialog(
         title: Text('Error'),
         content: Text('Unable to fetch users your following. Please try again later. ${response.statusCode}'),
         actions: <Widget>[
           TextButton(
             child: Text('OK'),
-            onPressed: () => Navigator.of(context).pop(), // Dismiss the dialog
+            onPressed: () => Navigator.of(context).pop(), 
           ),
         ],
       ),
@@ -101,22 +101,29 @@ Widget build(BuildContext context) {
                   },
                 ),
               ),
-              Padding(
-                 padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      onPressed: prevPage,
-                      child: Text('Previous'),
-                    ),
-                    ElevatedButton(
-                      onPressed: nextPage,
-                      child: Text('Next'),
-                    ),
-                  ],
-                ),
-              ),
+                        Padding(
+  padding: const EdgeInsets.only(bottom: 136.0),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      ElevatedButton(
+        onPressed: prevPage,
+        child: Text('Previous'),
+      ),
+      Text( 
+        'Page $currentPage',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold, 
+        ),
+      ),
+      ElevatedButton(
+        onPressed: nextPage,
+        child: Text('Next'),
+      ),
+    ],
+  ),
+),
             ],
           ),
   );

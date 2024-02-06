@@ -90,7 +90,7 @@ class _UserListPageState extends State<UserListPage> {
   int currentPage = 1;
   String searchQuery = 'a';
   final int perPage = 10;
-  final String githubApiToken = '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';
+  // final String githubApiToken = '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';
   String errorMessage = '';
   
   @override
@@ -100,13 +100,13 @@ class _UserListPageState extends State<UserListPage> {
   }
 
   Future<void> fetchData() async {
-     final headers = {
-      'Authorization': 'Bearer $githubApiToken',
-    };
+    //  final headers = {
+    //   'Authorization': 'token $githubApiToken',
+    // };
     final response = await http.get(
       Uri.parse(
           'https://api.github.com/search/users?q=$searchQuery&page=$currentPage&per_page=$perPage'),
-          headers: headers,
+          // headers: headers,
     );
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);

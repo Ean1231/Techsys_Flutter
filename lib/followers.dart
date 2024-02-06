@@ -38,7 +38,7 @@ if (response.statusCode == 200) {
   if (this.mounted) {
     // Using context safely by checking if the widget is still mounted
     showDialog(
-      context: context, // Context is used here directly
+      context: context, // use context here directly
       builder: (context) => AlertDialog(
         title: Text('Error'),
         content: Text('Unable to fetch followers. Please try again later. ${response.statusCode}'),
@@ -111,21 +111,29 @@ Widget build(BuildContext context) {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    ElevatedButton(
-                      onPressed: prevPage,
-                      child: Text('Previous'),
-                    ),
-                    ElevatedButton(
-                      onPressed: nextPage,
-                      child: Text('Next'),
-                    ),
-                  ],
-                ),
-              ),
+  padding: const EdgeInsets.only(bottom: 136.0),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      ElevatedButton(
+        onPressed: prevPage,
+        child: Text('Previous'),
+      ),
+      Text( 
+        'Page $currentPage',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold, 
+        ),
+      ),
+      ElevatedButton(
+        onPressed: nextPage,
+        child: Text('Next'),
+      ),
+    ],
+  ),
+),
+
             ],
           ),
   );

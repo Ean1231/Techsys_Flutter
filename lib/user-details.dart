@@ -6,7 +6,6 @@ import 'package:techsys_flutter/main.dart';
 
 class UserDetailsPage extends StatefulWidget {
   final String username;
-  // final User user; // Assuming User is a defined class elsewhere in your code
 
   UserDetailsPage({Key? key, required this.username}) : super(key: key);
 
@@ -20,11 +19,11 @@ class _UserDetailsPageState extends State<UserDetailsPage> {
   @override
   void initState() {
     super.initState();
-    fetchUserDetails(); // Fetch user details when the widget is initialized
+    fetchUserDetails(); 
   }
 Future<void> fetchUserDetails() async {
   final apiUrl = 'https://api.github.com/users/${widget.username}';
-  print('Fetching: $apiUrl'); // Log the URL
+  print('Fetching: $apiUrl'); 
 
   try {
     final response = await http.get(Uri.parse(apiUrl));
@@ -40,7 +39,6 @@ Future<void> fetchUserDetails() async {
     }
   } catch (e) {
     print('Exception caught: $e');
-    // Handle the exception or show an error message
   }
 }
 

@@ -28,11 +28,27 @@ class _GistsPageState extends State<GistsPage> {
 
     if (response.statusCode == 200) {
       final List<dynamic> gistsJsonList = json.decode(response.body);
-      setState(() {
-        gists = gistsJsonList;
-      });
+      if (mounted) {
+        setState(() {
+          gists = gistsJsonList;
+        });
+      }
     } else {
-      print('Failed to load gists');
+      if (mounted) {
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Error'),
+            content: Text('Unable to fetch followers. Please try again later. ${response.statusCode}'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          ),
+        );
+      }
     }
   }
 
@@ -52,47 +68,67 @@ class _GistsPageState extends State<GistsPage> {
     }
   }
 
-Widget build(BuildContext context) {
-  return Scaffold(
-    appBar: AppBar(
-      title: Text('${widget.username}\'s Gists'),
-    ),
-    body: SingleChildScrollView(
-      child: DataTable(
-        columns: [
-          DataColumn(label: Text('Description', style: TextStyle(fontWeight: FontWeight.bold))),
-          DataColumn(label: Text('Files', style: TextStyle(fontWeight: FontWeight.bold))),
-          DataColumn(label: Text('Action', style: TextStyle(fontWeight: FontWeight.bold))),
-        ],
-        rows: List.generate(
-          gists.length,
-          (index) => DataRow(cells: [
-            DataCell(Text(gists[index]['description'] ?? 'No description')),
-            DataCell(Text('${gists[index]['files'].length} Files')),
-            DataCell(Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-              ],
-            )),
-          ]),
-        ),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('${widget.username}\'s Gists'),
       ),
-    ),
-    bottomNavigationBar: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        ElevatedButton(
-          onPressed: prevPage,
-          child: Text('Previous'),
-        ),
-        ElevatedButton(
-          onPressed: nextPage,
-          child: Text('Next'),
-        ),
-      ],
-    ),
-  );
+      body: Column(
+        children: [
+          Expanded(
+            child: gists.isEmpty
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : ListView.builder(
+                    itemCount: gists.length,
+                    itemBuilder: (context, index) {
+                      return ListTile(
+                        title: Text(gists[index]['description'] ?? 'No description'),
+                      );
+                    },
+                  ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 136.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: prevPage,
+                  child: Text('Prev'),
+                ),
+                Text(
+                  'Page $currentPage',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: nextPage,
+                  child: Text('Next'),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
-}
+class Follower {
+  final String login;
+  final String avatarUrl;
 
+  Follower({required this.login, required this.avatarUrl});
+
+  factory Follower.fromJson(Map<String, dynamic> json) {
+    return Follower(
+      login: json['login'],
+      avatarUrl: json['avatar_url'],
+    );
+  }
+}

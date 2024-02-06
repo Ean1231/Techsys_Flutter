@@ -32,7 +32,6 @@ class _ReposPageState extends State<ReposPage> {
         repositories = repositoriesJsonList;
       });
     } else {
-      // Handle error
       print('Failed to load repositories');
     }
   }
@@ -75,7 +74,6 @@ class _ReposPageState extends State<ReposPage> {
                         DataCell(
                           ElevatedButton(
                             onPressed: () {
-                              // Handle repository tap action, e.g., navigate to repository details page
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => RepoDetailsPage(
@@ -92,19 +90,29 @@ class _ReposPageState extends State<ReposPage> {
                   .toList(),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: prevPage,
-                child: Text('Previous'),
-              ),
-              ElevatedButton(
-                onPressed: nextPage,
-                child: Text('Next'),
-              ),
-            ],
-          ),
+                               Padding(
+  padding: const EdgeInsets.only(bottom: 136.0),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      ElevatedButton(
+        onPressed: prevPage,
+        child: Text('Previous'),
+      ),
+      Text( 
+        'Page $currentPage',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold, 
+        ),
+      ),
+      ElevatedButton(
+        onPressed: nextPage,
+        child: Text('Next'),
+      ),
+    ],
+  ),
+),
         ],
       ),
     );
@@ -142,7 +150,6 @@ class _RepoDetailsPageState extends State<RepoDetailsPage> {
         repoDetails = jsonData;
       });
     } else {
-      // Handle error
       print('Failed to load repository details');
     }
   }
@@ -160,7 +167,7 @@ class _RepoDetailsPageState extends State<RepoDetailsPage> {
               padding: const EdgeInsets.all(16.0),
               child: Container(
                 width: screenWidth,
-                height: 300, // Set width to screen width
+                height: 300, 
                 child: Card(
                   elevation: 4.0,
                   child: Padding(

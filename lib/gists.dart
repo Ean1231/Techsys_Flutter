@@ -72,37 +72,6 @@ Widget build(BuildContext context) {
             DataCell(Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // IconButton(
-                //   icon: Icon(Icons.visibility),
-                //   onPressed: () {
-                //     // Handle view action, e.g., navigate to a detailed page
-                //   },
-                // ),
-//               IconButton(
-//   icon: Icon(Icons.code),
-//   onPressed: () {
-//     showDialog(
-//       context: context,
-//       builder: (context) {
-//         return AlertDialog(
-//           title: Text('Gist Code'),
-//           content: SingleChildScrollView(
-//             child: Text('Display the code content here'),
-//           ),
-//           actions: <Widget>[
-//             TextButton(
-//               child: Text('Close'),
-//               onPressed: () {
-//                 Navigator.of(context).pop();
-//               },
-//             ),
-//           ],
-//         );
-//       },
-//     );
-//   },
-// )
-
               ],
             )),
           ]),
@@ -126,3 +95,4 @@ Widget build(BuildContext context) {
 }
 
 }
+

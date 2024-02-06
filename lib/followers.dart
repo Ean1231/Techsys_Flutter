@@ -15,7 +15,7 @@ class FollowersPage extends StatefulWidget {
 class _FollowersPageState extends State<FollowersPage> {
   List<Follower> followers = [];
   int currentPage = 1; // Starting page
-
+  String? message = "Warning";
   @override
   void initState() {
     super.initState();
@@ -27,14 +27,33 @@ class _FollowersPageState extends State<FollowersPage> {
       Uri.parse('https://api.github.com/users/${widget.username}/followers?per_page=10&page=$page'),
     );
 
-    if (response.statusCode == 200) {
-      final List<dynamic> followerJsonList = json.decode(response.body);
-      setState(() {
-        followers = followerJsonList.map((json) => Follower.fromJson(json)).toList();
-      });
-    } else {
-      // Handle error
-    }
+if (response.statusCode == 200) {
+  final List<dynamic> followerJsonList = json.decode(response.body);
+  if (this.mounted) {
+    setState(() {
+      followers = followerJsonList.map((json) => Follower.fromJson(json)).toList();
+    });
+  }
+} else {
+  if (this.mounted) {
+    // Using context safely by checking if the widget is still mounted
+    showDialog(
+      context: context, // Context is used here directly
+      builder: (context) => AlertDialog(
+        title: Text('Error'),
+        content: Text('Unable to fetch followers. Please try again later. ${response.statusCode}'),
+        actions: <Widget>[
+          TextButton(
+            child: Text('OK'),
+            onPressed: () => Navigator.of(context).pop(), // Dismiss the dialog
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+
   }
 
   void nextPage() {
@@ -85,19 +104,7 @@ Widget build(BuildContext context) {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        // subtitle: Text(
-                        //   follower.type,
-                        //   style: TextStyle(
-                        //     fontSize: 16.0,
-                        //   ),
-                        // ),
-                        // trailing: Icon(
-                        //   Icons.arrow_forward,
-                        //   size: 32.0,
-                        // ),
-                        // onTap: () {
-                        //   // Handle follower item tap
-                        // },
+            
                       ),
                     );
                   },

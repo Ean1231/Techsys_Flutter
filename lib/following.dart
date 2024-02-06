@@ -32,8 +32,19 @@ class _FollowingPageState extends State<FollowingPage> {
         following = followingJsonList;
       });
     } else {
-      // Handle error
-      print('Failed to load following');
+     showDialog(
+      context: context, // Context is used here directly
+      builder: (context) => AlertDialog(
+        title: Text('Error'),
+        content: Text('Unable to fetch users your following. Please try again later. ${response.statusCode}'),
+        actions: <Widget>[
+          TextButton(
+            child: Text('OK'),
+            onPressed: () => Navigator.of(context).pop(), // Dismiss the dialog
+          ),
+        ],
+      ),
+    );
     }
   }
 
@@ -61,7 +72,7 @@ Widget build(BuildContext context) {
     ),
     body: following.isEmpty
         ? Center(
-            child: CircularProgressIndicator(), // Show loader while fetching following
+            child: CircularProgressIndicator(), 
           )
         : Column(
             children: [
@@ -85,9 +96,6 @@ Widget build(BuildContext context) {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        onTap: () {
-                          // Handle following item tap
-                        },
                       ),
                     );
                   },

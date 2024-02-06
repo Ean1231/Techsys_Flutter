@@ -9,18 +9,6 @@ import 'package:techsys_flutter/gists.dart';
 import 'followers.dart';
 
 
-// MaterialApp(
-//   title: 'GitHub Users and Repos',
-//   theme: ThemeData(
-//     primarySwatch: Colors.blue,
-//   ),
-//   initialRoute: '/',
-//   routes: {
-//     '/': (context) => const UserListPage()
-  
-//     // Other routes...
-//   },
-// );
 void main() {
   runApp(const MyApp());
 }
@@ -39,30 +27,30 @@ class MyApp extends StatelessWidget {
       initialRoute: '/',
       routes: {
         '/': (context) => const UserListPage(),
-       '/user-details': (context) { // Correct the route name here
+       '/user-details': (context) { 
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      final username = args['username'] ; // Make sure to retrieve the username from args
-      return UserDetailsPage( username: username); // Pass both the User object and username
+      final username = args['username'] ;
+      return UserDetailsPage( username: username); 
     },
-     '/repos': (context) { // Correct the route name here
+     '/repos': (context) { 
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      final username = args['username'] ; // Make sure to retrieve the username from args
-      return ReposPage( username: username); // Pass both the User object and username
+      final username = args['username'] ; 
+      return ReposPage( username: username); 
     },
-     '/gists': (context) { // Correct the route name here
+     '/gists': (context) {
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      final username = args['username'] ; // Make sure to retrieve the username from args
-      return GistsPage( username: username); // Pass both the User object and username
+      final username = args['username'] ;
+      return GistsPage( username: username); 
     },
-        '/followers': (context) { // Correct the route name here
+        '/followers': (context) { 
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      final username = args['username'] ; // Make sure to retrieve the username from args
-      return FollowersPage( username: username); // Pass both the User object and username
+      final username = args['username'] ;
+      return FollowersPage( username: username);
     },
-          '/following': (context) { // Correct the route name here
+          '/following': (context) { 
       final args = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
-      final username = args['username'] ; // Make sure to retrieve the username from args
-      return FollowingPage( username: username); // Pass both the User object and username
+      final username = args['username'] ; 
+      return FollowingPage( username: username); 
     },
       },
     );
@@ -102,7 +90,7 @@ class _UserListPageState extends State<UserListPage> {
   int currentPage = 1;
   String searchQuery = 'a';
   final int perPage = 10;
-  final String githubApiToken = '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';
+  final String githubApiToken = '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';
   String errorMessage = '';
   
   @override
@@ -113,7 +101,7 @@ class _UserListPageState extends State<UserListPage> {
 
   Future<void> fetchData() async {
      final headers = {
-      'Authorization': 'token $githubApiToken',
+      'Authorization': 'Bearer $githubApiToken',
     };
     final response = await http.get(
       Uri.parse(
@@ -174,15 +162,6 @@ Widget build(BuildContext context) {
             decoration: InputDecoration(
               labelText: 'Search Users',
               errorText: errorMessage.isNotEmpty ? errorMessage : null,
-              // suffixIcon: IconButton(
-              //   // icon: Icon(Icons.clear),
-              //   onPressed: () {
-              //     setState(() {
-              //       searchQuery = ''; // Clear the search query
-              //     });
-              //     fetchData(); // Initiate a new search
-              //   },
-              // ),
             ),
           ),
 
@@ -218,14 +197,14 @@ Widget build(BuildContext context) {
                             );
                           },
                           child: Text('View'),
-                        )), // Add a View button in the Action column
+                        )), 
                       ]),
                     ),
                   ),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 136.0), // Add top padding
+          padding: const EdgeInsets.only(bottom: 136.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
